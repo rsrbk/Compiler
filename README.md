@@ -1,4 +1,5 @@
 # GRAMMAR
+```
 <program> ::= program <name> var <vars> mark <marks> begin <statements> end
 <name> ::= <id>
 <vars> ::= <var> | <vars> <var>
@@ -25,8 +26,10 @@
 <constant> ::= <digit> | <constant><digit>
 <letter> ::= a|b|.|z
 <digit> ::= 0|1|.|9
+```
 
 # REFORMED GRAMMAR
+```
 <program> ::= program id var <vars> mark <marks> begin <statements> end
 <vars> ::= {id.}
 <marks> ::= {id~}
@@ -40,3 +43,4 @@
 <CM> ::= <ratio> | not <CM>
 <ratio> ::= <expression><symbol><expression>
 <symbol> ::= less | more | equals
+```
