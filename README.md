@@ -31,8 +31,8 @@
 # REFORMED GRAMMAR
 ```
 <program> ::= program id var <vars> mark <marks> begin <statements> end
-<vars> ::= {id.}
-<marks> ::= {id~}
+<vars> ::= id. {id.}
+<marks> ::= id~ {id~}
 <statements> ::= <statement> {\n <statement>}
 <statement> ::= id=<expression> | read(<vars>) | write(<vars>) |  repeat <statements> until  <condition> | if <condition> then goto id | id:
 <expression> ::= <T> {+ <T>|- <T>}
