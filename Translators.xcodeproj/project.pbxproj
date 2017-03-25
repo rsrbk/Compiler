@@ -30,7 +30,7 @@
 		446446FC1E02FD0500DA6BDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		446446FE1E02FD0500DA6BDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		446447041E02FEB800DA6BDB /* Analyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Analyzer.swift; sourceTree = "<group>"; };
-		447F4CD71E84310100FD448F /* Interpritator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interpritator.swift; path = ../Interpritator.swift; sourceTree = "<group>"; };
+		447F4CD71E84310100FD448F /* Interpritator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interpritator.swift; path = Interpritator.swift; sourceTree = "<group>"; };
 		44A29D221E07482400D6EDF7 /* LexemsTableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LexemsTableViewExtension.swift; sourceTree = "<group>"; };
 		44AB711B1E81C6AB0066A530 /* PolizGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolizGenerator.swift; sourceTree = "<group>"; };
 		44AB711D1E825E310066A530 /* PolizStepsTableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PolizStepsTableViewExtension.swift; sourceTree = "<group>"; };
@@ -69,8 +69,8 @@
 				44A29D211E07480F00D6EDF7 /* System */,
 				4491554A1E0AA20E0067CEBE /* UI */,
 				446447041E02FEB800DA6BDB /* Analyzer.swift */,
-				44AB711B1E81C6AB0066A530 /* PolizGenerator.swift */,
 				447F4CD71E84310100FD448F /* Interpritator.swift */,
+				44AB711B1E81C6AB0066A530 /* PolizGenerator.swift */,
 			);
 			path = Translators;
 			sourceTree = "<group>";
@@ -81,8 +81,8 @@
 				4456FF361E07516400A0D598 /* ConstantsTableViewExtension.swift */,
 				4456FF381E07534300A0D598 /* IdentifiersTableViewExtension.swift */,
 				44A29D221E07482400D6EDF7 /* LexemsTableViewExtension.swift */,
-				44AB711D1E825E310066A530 /* PolizStepsTableViewExtension.swift */,
 				446446FB1E02FD0500DA6BDB /* Main.storyboard */,
+				44AB711D1E825E310066A530 /* PolizStepsTableViewExtension.swift */,
 				446446F71E02FD0500DA6BDB /* ViewController.swift */,
 			);
 			path = UI;
