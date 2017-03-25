@@ -14,14 +14,20 @@ class ViewController: NSViewController {
     @IBOutlet weak var lexemsTableView: NSTableView!
     @IBOutlet weak var constantsTableView: NSTableView!
     @IBOutlet weak var identifiersTableView: NSTableView!
+    @IBOutlet weak var polizStepsTableView: NSTableView!
+    @IBOutlet weak var outTextField: NSTextField!
 
-    @IBOutlet weak var errorsLabel: NSTextField!
+    @IBOutlet weak var marksLabel: NSTextField!
+    @IBOutlet weak var polizLabel: NSTextField!
 
     private let analyzer = Analyzer()
+    private let polizGenerator = PolizGenerator()
+    private let interpritator = Interpritator()
 
     private let lexemsTableViewExtension = LexemsTableViewExtension()
     private let constantsTableViewExtension = ConstantsTableViewExtension()
     private let identifiersTableViewExtension = IdentifiersTableViewExtension()
+    private let polizStepsTableViewExtension = PolizStepsTableViewExtension()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +40,16 @@ class ViewController: NSViewController {
 
         identifiersTableView.delegate = identifiersTableViewExtension
         identifiersTableView.dataSource = identifiersTableViewExtension
+
+        polizStepsTableView.delegate = polizStepsTableViewExtension
+        polizStepsTableView.dataSource = polizStepsTableViewExtension
     }
 
     @IBAction func compileAction(_ sender: NSButton) {
         if let code = codeView.textStorage?.string {
             analyzer.lexicalAnalyzer(code: code)
             analyzer.syntaxAnalyzer()
-            print(analyzer.errors.map({ $0.description }))
+
             if !analyzer.errors.isEmpty {
                 let alert = NSAlert()
                 alert.messageText = "Lexical error"
@@ -57,6 +66,48 @@ class ViewController: NSViewController {
                 lexemsTableView.reloadData()
                 identifiersTableView.reloadData()
             }
+
+            // MARK: Poliz Generator
+            polizGenerator.lexems = analyzer.lexems
+            polizGenerator.generatePoliz()
+
+            polizStepsTableViewExtension.rows = polizGenerator.steps
+            polizStepsTableView.reloadData()
+
+            let polizString = polizGenerator.out.reduce("", { $0 + $1 + " " })
+            polizLabel.stringValue = polizString
+
+            let marksString = polizGenerator.polizLexems.flatMap({ lexem -> String? in
+                if let mark = lexem as? InternalMark {
+                    return "Mark: \(mark.name), index: \(mark.index)"
+                }
+                return nil
+            }).reduce("", { $0 + $1 + " | " })
+            marksLabel.stringValue = marksString
+
+            // MARK: Interpritator
+            interpritator.lexems = polizGenerator.polizLexems.flatMap({ lexem in
+                if let lexem = lexem as? (LexemDescription, [Any]) {
+                    return lexem.0
+                } else if let lexem = lexem as? LexemDescription {
+                    return lexem
+                } else if let uph = lexem as? UPH {
+                    return uph
+                } else if let mark = lexem as? InternalMark {
+                    return mark
+                }
+                return nil
+            })
+            interpritator.marks = polizGenerator.polizLexems.flatMap({ lexem -> InternalMark? in
+                if let mark = lexem as? InternalMark {
+                    return mark
+                }
+                return nil
+            })
+            //print(polizGenerator.polizLexems)
+            //print(interpritator.lexems)
+            interpritator.interpritate()
+            outTextField.stringValue = interpritator.out
         }
     }
 }
