@@ -48,7 +48,8 @@ class PolizGenerator {
         "and": 10,
         "not": 10,
         "until": 11,
-        "write": 12
+        "write": 12,
+        "read": 13
     ]
 
     var lexems: [LexemDescription] = [] {
@@ -84,6 +85,7 @@ class PolizGenerator {
 
     func generatePoliz() {
         var finishExpression = false
+        var lexemsOffset = 0
         steps = []
         polizLexems = []
         out = []
@@ -91,10 +93,12 @@ class PolizGenerator {
 
         for (index, lexem) in lexems.enumerated() {
             if lexem.0 == "." {
+                lexemsOffset += 1
                 continue
             }
             if lexem.0 == ":" {
-                let mark = InternalMark(name: lexems[index-1].0, index: index)
+                lexemsOffset += 1
+                let mark = InternalMark(name: lexems[index-1].0, index: index-lexemsOffset)
                 polizLexems.append(mark)
                 continue
             }
@@ -170,6 +174,8 @@ class PolizGenerator {
                     }
                 } else if lexem.0 != "\n" {
                     stack.append((lexem, []))
+                } else {
+                    lexemsOffset += 1
                 }
             }
 

@@ -11,6 +11,7 @@ import Foundation
 class Interpritator {
     var lexems: [Any] = []
     var marks: [InternalMark] = []
+    var input: [Int] = []
     var out: String = ""
 
     private var stack: [Any] = []
@@ -21,6 +22,7 @@ class Interpritator {
     }
 
     func interpritate() {
+        out = ""
         var i = 0
         while i < lexems.count {
             let lexem = lexems[i]
@@ -83,12 +85,21 @@ class Interpritator {
                                     out += "\(value)\n"
                                 }
                             }
+                        case "read":
+                            if !input.isEmpty {
+                                if let l = stack.removeLast() as? LexemDescription {
+                                    let value = input.removeFirst()
+                                    identifiersMap[l.0] = value
+                                }
+                            }
                         case "less", "equals", "more":
                             stack.append(lexem)
                         case "goto":
+
                             if let l = stack.removeLast() as? LexemDescription {
                                 if let mark = marks.filter({ $0.name == l.0 }).first {
                                     i = mark.index
+
                                     continue
                                 }
                             }

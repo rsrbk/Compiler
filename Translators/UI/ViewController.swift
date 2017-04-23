@@ -16,6 +16,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var identifiersTableView: NSTableView!
     @IBOutlet weak var polizStepsTableView: NSTableView!
     @IBOutlet weak var outTextField: NSTextField!
+    @IBOutlet var inputTextView: NSTextView!
 
     @IBOutlet weak var marksLabel: NSTextField!
     @IBOutlet weak var polizLabel: NSTextField!
@@ -86,6 +87,11 @@ class ViewController: NSViewController {
             marksLabel.stringValue = marksString
 
             // MARK: Interpritator
+            var inputArr: [Int] = []
+            if let input = inputTextView.textStorage?.string {
+                inputArr = input.components(separatedBy: "\n").flatMap({ Int($0) })
+            }
+            interpritator.input = inputArr
             interpritator.lexems = polizGenerator.polizLexems.flatMap({ lexem in
                 if let lexem = lexem as? (LexemDescription, [Any]) {
                     return lexem.0
